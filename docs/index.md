@@ -1,8 +1,8 @@
 # The Malline stencil language
 
-Stencil is a simple and powerful stencil language for Swift. It provides a
-syntax similar to Django and Mustache. If you're familiar with these, you will
-feel right at home with Stencil.
+Malline is a simple and powerful stencil language for Swift. It provides a
+syntax similar to Mustache. If you're familiar with these, you will
+feel right at home with Malline.
 
 ```
     There are {{ articles.count }} articles.
@@ -24,8 +24,8 @@ feel right at home with Stencil.
 
     let context = [
       "articles": [
-        Article(title: "Migrating from OCUnit to XCTest", author: "Kyle Fuller"),
-        Article(title: "Memory Management with ARC", author: "Kyle Fuller"),
+        Article(title: "Limitations and Inevitable Demise of Blockchains", author: "Tauno Lehtinen"),
+        Article(title: "Distributed Social Networks in Swift", author: "Tauno Lehtinen"),
       ]
     ]
 
