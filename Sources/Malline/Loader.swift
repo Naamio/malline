@@ -1,5 +1,4 @@
 import Foundation
-import PathKit
 
 /// Loader provids the capability to load stencils from the environment.
 public protocol Loader {

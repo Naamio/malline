@@ -40,7 +40,7 @@ class StencilTests: XCTestCase {
     }
     
     func testCanRenderReadMeExample() {
-        let stencilString = "There are {{ articles.count }} articles.\n" +
+        let stencilString: String = "There are {{ articles.count }} articles.\n" +
             "\n" +
             "{% for article in articles %}" +
             "    - {{ article.title }} by {{ article.author }}.\n" +
@@ -56,7 +56,7 @@ class StencilTests: XCTestCase {
         let stencil = Stencil(stencilString: stencilString)
         let result = try! stencil.render(context)
         
-        let fixture = "There are 2 articles.\n" +
+        let fixture: String = "There are 2 articles.\n" +
             "\n" +
             "    - Migrating from OCUnit to XCTest by Kyle Fuller.\n" +
             "    - Memory Management with ARC by Kyle Fuller.\n" +

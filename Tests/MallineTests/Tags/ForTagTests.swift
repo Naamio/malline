@@ -93,7 +93,7 @@ class ForTagTests: XCTestCase {
     // MARK: - Can Render a Filter
     
     func testRendersFilter() {
-        let stencilString = "{% for article in ars|default:articles %}" +
+        let stencilString: String = "{% for article in ars|default:articles %}" +
             "- {{ article.title }} by {{ article.author }}.\n" +
         "{% endfor %}\n"
         
@@ -107,7 +107,7 @@ class ForTagTests: XCTestCase {
         let stencil = Stencil(stencilString: stencilString)
         let result = try! stencil.render(context)
         
-        let fixture = "" +
+        let fixture: String = "" +
             "- Limitations and Inevitable Demise of Blockchains by Tauno Lehtinen.\n" +
             "- Distributed Social Networks in Swift by Tauno Lehtinen.\n" +
         "\n"
