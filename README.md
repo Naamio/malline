@@ -28,8 +28,8 @@ struct Article {
 
 let context = [
   "articles": [
-    Article(title: "Migrating from OCUnit to XCTest", author: "Kyle Fuller"),
-    Article(title: "Memory Management with ARC", author: "Kyle Fuller"),
+    Article(title: "Limitations and Inevitable Demise of Blockchains", author: "Tauno Lehtinen"),
+    Article(title: "Distributed Social Networks in Swift", author: "Tauno Lehtinen"),
   ]
 ]
 
@@ -53,17 +53,17 @@ Stencil follows the same philosophy of Django:
 
 Resources for Stencil template authors to write Stencil templates:
 
-- [Language overview](http://stencil.fuller.li/en/latest/templates.html)
-- [Built-in template tags and filters](http://stencil.fuller.li/en/latest/builtins.html)
+- [Language overview](docs/templates.md)
+- [Built-in template tags and filters](docs/builtins.md)
 
 Resources to help you integrate Stencil into a Swift project:
 
-- [Installation](http://stencil.fuller.li/en/latest/installation.html)
-- [Getting Started](http://stencil.fuller.li/en/latest/getting-started.html)
-- [API Reference](http://stencil.fuller.li/en/latest/api.html)
-- [Custom Template Tags and Filters](http://stencil.fuller.li/en/latest/custom-template-tags-and-filters.html)
+- [Installation](docs/installation.md)
+- [Getting Started](docs/getting-started.md)
+- [API Reference](docs/api.md)
+- [Custom Template Tags and Filters](docs/custom-template-tags-and-filters.md)
 
 ## License
 
-Stencil is licensed under the BSD license. See [LICENSE](LICENSE) for more
+Malline is licensed under the MIT license. See [LICENSE](LICENSE) for more
 info.
