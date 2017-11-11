@@ -4,7 +4,7 @@
 
 Malline is a simple and powerful template language for Swift. It provides a
 syntax similar to Handlebars & Mustache. If you're familiar with these, you will
-feel right at home with Stencil.
+feel right at home with Malline.
 
 ## Example
 
