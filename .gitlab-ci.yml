@@ -1,0 +1,95 @@
+variables:
+  DOCKER_DRIVER: overlay
+  CONTAINER_TEST_IMAGE: $CI_REGISTRY_IMAGE:$CI_BUILD_REF_NAME
+  CONTAINER_IMAGE: $CI_REGISTRY_IMAGE
+  CONTAINER_RELEASE_IMAGE: $CI_REGISTRY_IMAGE:latest
+
+cache:
+  key: "$CI_PROJECT_NAME"
+  untracked: false
+  policy: push
+  #paths:
+   # - .build/
+
+stages:
+  - build
+  - test
+  - release
+  #- deploy
+
+build-app:
+  image: ibmcom/swift-ubuntu:latest
+  stage: build
+  script:
+    - echo "Building release artifact"
+    - swift build -c release -Xcc -fblocks -Xlinker -L/usr/local/lib 
+  artifacts:
+    paths:
+    - .build/release
+    expire_in: 1 week
+  tags:
+    - docker
+  when: manual
+  only:
+    - release   
+
+review-app:
+  image: ibmcom/swift-ubuntu:latest
+  stage: test
+  script:
+    - echo "Reviewing $CI_PROJECT_NAME" 
+    - make build
+    - make test
+  only:
+    - branches
+  except: 
+    - master
+
+test-app:
+  image: ibmcom/swift-ubuntu:latest
+  stage: test
+  script:
+    - echo "Testing $CI_PROJECT_NAME"
+    - make test
+  tags:
+    - docker
+  only:
+    - master
+  artifacts:
+    paths:
+    - .build/debug
+
+release-image:
+  image: docker:latest
+  stage: release
+  services:
+    - docker:dind
+  before_script:
+    - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN registry.gitlab.com
+  script:
+    - docker build --pull -t $CONTAINER_TEST_IMAGE -f Dockerfile .
+    - docker tag $CONTAINER_TEST_IMAGE $CONTAINER_IMAGE:latest
+    - docker push $CONTAINER_IMAGE:latest
+  when: manual
+  tags:
+    - docker
+  only: 
+    - release
+
+#release-image:
+#  image: docker:latest
+#  stage: release
+#  script:
+#    - docker pull $CONTAINER_TEST_IMAGE
+#    - docker tag $CONTAINER_TEST_IMAGE $CONTAINER_RELEASE_IMAGE
+#    - docker push $CONTAINER_RELEASE_IMAGE
+#  only:
+#    - release
+
+#deploy:
+#  image: ibmcom/swift-ubuntu:latest
+#  stage: deploy
+#  script:
+#    - ./deploy.sh
+#  only:
+#    - master
