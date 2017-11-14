@@ -7,10 +7,6 @@ class LoaderTests: XCTestCase {
     var loader: FileSystemLoader!
     var environment: Environment!
     
-    convenience override init() {
-        self.init()
-    }
-    
     override func setUp() {
         super.setUp()
         
