@@ -16,7 +16,7 @@ class IncludeTag : TagType {
         self.stencilName = stencilName
     }
     
-    func render(_ context: Context) throws -> String {
+    func render(_ context: Context) throws -> String {        
         guard let stencilName = try self.stencilName.resolve(context) as? String else {
             throw StencilSyntaxError("'\(self.stencilName)' could not be resolved as a string")
         }
