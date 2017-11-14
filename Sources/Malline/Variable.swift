@@ -58,7 +58,12 @@ public struct Variable : Equatable, Resolvable {
         
         if (variable.hasPrefix("'") && variable.hasSuffix("'")) || (variable.hasPrefix("\"") && variable.hasSuffix("\"")) {
             // String literal
-            return variable[variable.index(after: variable.startIndex) ..< variable.index(before: variable.endIndex)]
+            let startIndex = variable.index(after: variable.startIndex)
+            let endIndex = variable.index(before: variable.endIndex)
+           
+            let value = String(variable[startIndex ..< endIndex])
+            
+            return value
         }
         
         if let number = Number(variable) {

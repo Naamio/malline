@@ -5,6 +5,7 @@ clean:
 
 build: clean
 	@echo --- Building Malline
+	swift --version
 	swift build
 
 test: build
