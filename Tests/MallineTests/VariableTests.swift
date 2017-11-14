@@ -19,6 +19,12 @@ fileprivate struct Article {
 class VariableTests: XCTestCase {
     
     var context: Context!
+
+    static var allTests: [(String, (VariableTests) -> () throws -> Void)] {
+        return [
+            ("testCanResolveStringLiteralWithSingleQuotes", testCanResolveStringLiteralWithSingleQuotes)
+        ]
+    }
     
     override func setUp() {
         super.setUp()
