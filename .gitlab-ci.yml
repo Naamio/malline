@@ -36,6 +36,7 @@ build-app:
   image: ibmcom/swift-ubuntu:latest
   stage: build
   script:
+    - echo swift --version
     - echo "Building release artifact"
     - swift build -c release -Xcc -fblocks -Xlinker -L/usr/local/lib 
   artifacts:
