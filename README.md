@@ -41,7 +41,7 @@ print(rendered)
 
 ## Philosophy
 
-Stencil follows the same philosophy of Django:
+Malline follows the same philosophy of Django:
 
 > If you have a background in programming, or if you’re used to languages which
 > mix programming code directly into HTML, you’ll want to bear in mind that the
@@ -51,12 +51,12 @@ Stencil follows the same philosophy of Django:
 
 ## The User Guide
 
-Resources for Stencil template authors to write Stencil templates:
+Resources for Malline template authors to write Malline templates:
 
 - [Language overview](docs/templates.md)
 - [Built-in template tags and filters](docs/builtins.md)
 
-Resources to help you integrate Stencil into a Swift project:
+Resources to help you integrate Malline into a Swift project:
 
 - [Installation](docs/installation.md)
 - [Getting Started](docs/getting-started.md)
