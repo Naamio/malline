@@ -8,6 +8,16 @@ class ErrorTag : TagType {
 }
 
 class TagTests: XCTestCase {
+
+    static var allTests: [(String, (TagTests) -> () throws -> Void)] {
+        return [
+            ("testTextTag", testTextTag),
+            ("testRendersVariableTag", testRendersVariableTag),
+            ("testRendersNonStringVariableTag", testRendersNonStringVariableTag),
+            ("testRendersTag", testRendersTag),
+            ("testErrorsOnTagFailure", testErrorsOnTagFailure),
+        ]
+    }
     
     // MARK: - Tag
     
