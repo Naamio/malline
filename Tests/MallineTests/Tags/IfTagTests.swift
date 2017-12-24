@@ -1,7 +1,27 @@
 import XCTest
+
 @testable import Malline
 
 class IfTagTests: XCTestCase {
+
+    static var allTests: [(String, (IfTagTests) -> () throws -> Void)] {
+        return [
+            ("testParsesIfBlock", testParsesIfBlock),
+            ("testParsesIfElseBlock", testParsesIfElseBlock),
+            ("testParsesElifBlock", testParsesElifBlock),
+            ("testElifWithoutElse", testElifWithoutElse),
+            ("testParsesMultipleElifBlock", testParsesMultipleElifBlock),
+            ("testParsesComplexIf", testParsesComplexIf),
+            ("testParsesIfNotBlock", testParsesIfNotBlock),
+            ("testErrorsOnIfWithoutEnd", testErrorsOnIfWithoutEnd),
+            ("testErrorsOnIfNotWithoutEnd", testErrorsOnIfNotWithoutEnd),
+            ("testRendersTrue", testRendersTrue),
+            ("testRendersFirstTrue", testRendersFirstTrue),
+            ("testRendersEmptyWhenOthersAreFalse", testRendersEmptyWhenOthersAreFalse),
+            ("testRendersEmptyWithNoTruths", testRendersEmptyWithNoTruths),
+            ("testVariableFiltersInIf", testVariableFiltersInIf),
+        ]
+    }
     
     // MARK: - Parsing
     

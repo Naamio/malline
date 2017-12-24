@@ -3,6 +3,7 @@ import XCTest
 @testable import MallineTests
 
 XCTMain([
+    testCase(IfTagTests.allTests),
     testCase(NowTagTests.allTests),
     testCase(TagTests.allTests),
     testCase(ContextTests.allTests),
