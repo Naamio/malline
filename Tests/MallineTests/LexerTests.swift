@@ -2,6 +2,17 @@ import XCTest
 @testable import Malline
 
 class LexerTests: XCTestCase {
+
+    static var allTests: [(String, (LexerTests) -> () throws -> Void)] {
+        return [
+            ("testTokenizesText", testTokenizesText),
+            ("testTokenizesComment", testTokenizesComment),
+            ("testTokenizesVariable", testTokenizesVariable),
+            ("testTokenizesUnclosedTag", testTokenizesUnclosedTag),
+            ("testTokenizesMixedContent", testTokenizesMixedContent),
+            ("testTokenizeTwoVariables", testTokenizeTwoVariables),
+        ]
+    }
     
     // MARK: - Lexer
     

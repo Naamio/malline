@@ -1,5 +1,6 @@
 import Foundation
 import XCTest
+
 @testable import Malline
 
 #if os(OSX)
@@ -22,7 +23,16 @@ class VariableTests: XCTestCase {
 
     static var allTests: [(String, (VariableTests) -> () throws -> Void)] {
         return [
-            ("testCanResolveStringLiteralWithSingleQuotes", testCanResolveStringLiteralWithSingleQuotes)
+            ("testCanResolveStringLiteralWithSingleQuotes", testCanResolveStringLiteralWithSingleQuotes),
+            ("testCanResolveIntegerLiteral", testCanResolveIntegerLiteral),
+            ("testCanResolveFloatLiteral", testCanResolveFloatLiteral),
+            ("testCanResolveStringLiteral", testCanResolveStringLiteral),
+            ("testCanResolveItemFromDictionary", testCanResolveItemFromDictionary),
+            ("testCanResolveItemFromArrayByIndex", testCanResolveItemFromArrayByIndex),
+            ("testCanResolveItemFromArrayByUnknownIndex", testCanResolveItemFromArrayByUnknownIndex),
+            ("testCanResolveFirstItemFromArray", testCanResolveFirstItemFromArray),
+            ("testCanResolveLastItemFromArray", testCanResolveLastItemFromArray),
+            ("testCanResolvePropertyWithReflection", testCanResolvePropertyWithReflection),
         ]
     }
     

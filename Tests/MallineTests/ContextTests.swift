@@ -1,7 +1,23 @@
 import XCTest
+
 @testable import Malline
 
 class ContextTests: XCTestCase {
+
+    static var allTests: [(String, (ContextTests) -> () throws -> Void)] {
+        return [
+            ("testGetValueViaSubscripting", testGetValueViaSubscripting),
+            ("testSetValueViaSubscripting", testSetValueViaSubscripting),
+            ("testRemovalOfValueViaSubscripting", testRemovalOfValueViaSubscripting),
+            ("testRetrievingValueFromParent", testRetrievingValueFromParent),
+            ("testOverridingParentValue", testOverridingParentValue),
+            ("testPopToPreviousState", testPopToPreviousState),
+            ("testRemoveParentValueFromLevel", testRemoveParentValueFromLevel),
+            ("testDictionaryPushWithRestoreClosure", testDictionaryPushWithRestoreClosure),
+            ("testFlattenContextContents", testFlattenContextContents),
+            ("testPerformanceExample", testPerformanceExample),
+        ]
+    }
     
     let context = Context(dictionary: ["name": "Tauno"])
     

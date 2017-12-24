@@ -2,6 +2,17 @@ import XCTest
 @testable import Malline
 
 class EnvironmentTests: XCTestCase {
+
+    static var allTests: [(String, (EnvironmentTests) -> () throws -> Void)] {
+        return [
+            ("testLoadStencilFromName", testLoadStencilFromName),
+            ("testLoadStencilFromNames", testLoadStencilFromNames),
+            ("testRenderStencilFromString", testRenderStencilFromString),
+            ("testRenderStencilFromFile", testRenderStencilFromFile),
+            ("testRenderCustomStencil", testRenderCustomStencil),
+            ("testPerformanceExample", testPerformanceExample),
+        ]
+    }
     
     let environment = Environment(loader: ExampleLoader())
     

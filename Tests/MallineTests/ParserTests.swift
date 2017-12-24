@@ -1,7 +1,18 @@
 import XCTest
+
 @testable import Malline
 
 class ParserTests: XCTestCase {
+
+    static var allTests: [(String, (ParserTests) -> () throws -> Void)] {
+        return [
+            ("testParsesTextToken", testParsesTextToken),
+            ("testParsesVariableToken", testParsesVariableToken),
+            ("testParsesCommentToken", testParsesCommentToken),
+            ("testParsesTagToken", testParsesTagToken),
+            ("testErrorsWhenParsingUnknownTag", testErrorsWhenParsingUnknownTag),
+        ]
+    }
     
     // MARK: - Token Parser
     

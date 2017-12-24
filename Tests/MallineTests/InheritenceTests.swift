@@ -2,6 +2,14 @@ import XCTest
 @testable import Malline
 
 class InheritenceTests: XCTestCase {
+
+    static var allTests: [(String, (InheritenceTests) -> () throws -> Void)] {
+        return [
+            ("testInheritsFromStencil", testInheritsFromStencil),
+            ("testInheritsFromSubStencil", testInheritsFromSubStencil),
+            ("testInheritsFromSubSubStencil", testInheritsFromSubSubStencil),
+        ]
+    }
     
     var path: Path!
     var loader: FileSystemLoader!

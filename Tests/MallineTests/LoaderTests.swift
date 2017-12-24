@@ -1,7 +1,18 @@
 import XCTest
+
 @testable import Malline
 
 class LoaderTests: XCTestCase {
+
+    static var allTests: [(String, (LoaderTests) -> () throws -> Void)] {
+        return [
+            ("testErrorsWhenNoStencil", testErrorsWhenNoStencil),
+            ("testErrorsWhenNoStencilArray", testErrorsWhenNoStencilArray),
+            ("testLoadStencilFromFile", testLoadStencilFromFile),
+            ("testErrorLoadAbsoluteFileFromSelected", testErrorLoadAbsoluteFileFromSelected),
+            ("testErrorLoadingRelativeFileFromSelected", testErrorLoadingRelativeFileFromSelected),
+        ]
+    }
     
     var path: Path!
     var loader: FileSystemLoader!
