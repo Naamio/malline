@@ -13,6 +13,16 @@ fileprivate struct Article {
 }
 
 class StencilTests: XCTestCase {
+
+    static var allTests: [(String, (StencilTests) -> () throws -> Void)] {
+        return [
+            ("testCanRenderReadMeExample", testCanRenderReadMeExample),
+            ("testCanRenderCustomStencilTag", testCanRenderCustomStencilTag),
+            ("testCanRenderSimpleCustomTag", testCanRenderSimpleCustomTag),
+            ("testCanRenderStencilFromString", testCanRenderStencilFromString),
+            ("testCanRenderStencilFromStringLiteral", testCanRenderStencilFromStringLiteral),
+        ]
+    }
     
     // MARK: - Stencil Tests
     
