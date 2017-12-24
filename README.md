@@ -1,8 +1,12 @@
 # Malline
 
-[![Build Status](https://travis-ci.org/omnijarstudio/malline.svg?branch=master)](https://travis-ci.org/omnijarstudio/malline)
+[![Swift Package Manager](https://img.shields.io/badge/spm-compatible-brightgreen.svg?style=flat)](https://swift.org/package-manager)
+[![macOS](https://img.shields.io/badge/os-macOS-green.svg?style=flat)]()
+[![Linux](https://img.shields.io/badge/os-linux-green.svg?style=flat)]()
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=flat)](https://opensource.org/licenses/MIT)
+[![Twitter: @omnijarstudio](https://img.shields.io/badge/contact-@omnijarstudio-blue.svg?style=flat)](https://twitter.com/omnijarstudio)
 
-Malline is a simple and powerful template language for Swift. It provides a
+**Malline** is a simple and powerful template language for Swift. It provides a
 syntax similar to Handlebars & Mustache. If you're familiar with these, you will
 feel right at home with Malline.
 
@@ -19,7 +23,7 @@ There are {{ articles.count }} articles.
 ```
 
 ```swift
-import Stencil
+import Malline
 
 struct Article {
   let title: String
@@ -38,16 +42,6 @@ let rendered = try environment.renderTemplate(name: context)
 
 print(rendered)
 ```
-
-## Philosophy
-
-Malline follows the same philosophy of Django:
-
-> If you have a background in programming, or if you’re used to languages which
-> mix programming code directly into HTML, you’ll want to bear in mind that the
-> Django template system is not simply Python embedded into HTML. This is by
-> design: the template system is meant to express presentation, not program
-> logic.
 
 ## The User Guide
 
