@@ -7,11 +7,6 @@ class NowTagTests: XCTestCase {
 
     static var allTests: [(String, (NowTagTests) -> () throws -> Void)] {
         return [
-            #if !os(Linux)
-            ("testParsesDefaultFormatWithoutAnyNowArguments", testParsesDefaultFormatWithoutAnyNowArguments),
-            ("testsParsesNowWithAFormat", testsParsesNowWithAFormat),
-            ("testsRenderingDate", testsRenderingDate),
-            #endif
         ]
     }
     
