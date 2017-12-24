@@ -1,7 +1,25 @@
 import XCTest
+
 @testable import Malline
 
 class ForTagTests: XCTestCase {
+
+    static var allTests: [(String, (ForTagTests) -> () throws -> Void)] {
+        return [
+            ("testRendersGivenTags", testRendersGivenTags),
+            ("testRendersEmptyTags", testRendersEmptyTags),
+            ("testRendersGenericArray", testRendersGenericArray),
+            ("testRendersProvidingFirstInContext", testRendersProvidingFirstInContext),
+            ("testRendersProvidingLastInContext", testRendersProvidingLastInContext),
+            ("testRendersProvidingCounter", testRendersProvidingCounter),
+            ("testRendersWithWhereFilter", testRendersWithWhereFilter),
+            ("testRendersWithWhereFilterOut", testRendersWithWhereFilterOut),
+            ("testRendersFilter", testRendersFilter),
+            ("testRendersWithDictionary", testRendersWithDictionary),
+            ("testRendersWithDictionaryWithValue", testRendersWithDictionaryWithValue),
+        ]
+    }
+
     let context = Context(dictionary: [
         "items": [1, 2, 3],
         "emptyItems": [Int](),
