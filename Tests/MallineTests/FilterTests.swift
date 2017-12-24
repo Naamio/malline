@@ -2,6 +2,27 @@ import XCTest
 @testable import Malline
 
 class FilterTests: XCTestCase {
+
+    static var allTests: [(String, (FilterTests) -> () throws -> Void)] {
+        return [
+            ("testCustomFilterRegistration", testCustomFilterRegistration),
+            ("testCustomFilterRegistrationWithSingleArgument", testCustomFilterRegistrationWithSingleArgument),
+            ("testCustomFilterRegistrationWithMultipleArguments", testCustomFilterRegistrationWithMultipleArguments),
+            ("testCustomFilterWhichThrows", testCustomFilterWhichThrows),
+            ("testDefaultFilterOverride", testDefaultFilterOverride),
+            ("testWhitespaceInExpression", testWhitespaceInExpression),
+            ("testSimpleFilterThrowsWithArgument", testSimpleFilterThrowsWithArgument),
+            ("testStringCapitalization", testStringCapitalization),
+            ("testStringUppercaseTransformation", testStringUppercaseTransformation),
+            ("testStringLowercaseTransformation", testStringLowercaseTransformation),
+            ("testVariableValueFilter", testVariableValueFilter),
+            ("testDefaultValueFilter", testDefaultValueFilter),
+            ("testStringCollectionJoin", testStringCollectionJoin),
+            ("testMixedTypeCollectionJoin", testMixedTypeCollectionJoin),
+            ("testNonStringJoin", testNonStringJoin),
+            ("testCanJoinWithoutArguments", testCanJoinWithoutArguments),
+        ]
+    }
     
     // MARK: - Stencil Filters
     

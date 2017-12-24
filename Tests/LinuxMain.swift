@@ -3,6 +3,7 @@ import XCTest
 @testable import MallineTests
 
 XCTMain([
+    testCase(FilterTests.allTests),
     testCase(IncludeTests.allTests),
     testCase(InheritenceTests.allTests),
     testCase(LexerTests.allTests),
