@@ -1,4 +1,5 @@
 import XCTest
+
 @testable import Malline
 
 fileprivate class CustomTag : TagType {
