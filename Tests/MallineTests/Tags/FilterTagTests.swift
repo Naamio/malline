@@ -1,7 +1,16 @@
 import XCTest
+
 @testable import Malline
 
 class FilterTagTests: XCTestCase {
+
+    static var allTests: [(String, (FilterTagTests) -> () throws -> Void)] {
+        return [
+            ("testFilterTag", testFilterTag),
+            ("testFilterChain", testFilterChain),
+            ("testNoFilterError", testNoFilterError),
+        ]
+    }
     
     func testFilterTag() {
         let stencil = Stencil(stencilString: "{% filter uppercase %}Test{% endfilter %}")
