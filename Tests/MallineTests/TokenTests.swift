@@ -1,7 +1,16 @@
 import XCTest
+
 @testable import Malline
 
 class TokenTests: XCTestCase {
+
+    static var allTests: [(String, (TokenTests) -> () throws -> Void)] {
+        return [
+            ("testCanSplitContentsIntoComponents", testCanSplitContentsIntoComponents),
+            ("testCanSplitContentsIntoComponentsWithSingleQuotedStrings", testCanSplitContentsIntoComponentsWithSingleQuotedStrings),
+            ("testCanSplitContentsIntoComponentsWithDoubleQuotedStrings", testCanSplitContentsIntoComponentsWithDoubleQuotedStrings),
+        ]
+    }
     
     func testCanSplitContentsIntoComponents() {
         let token = Token.text(value: "hello world")
