@@ -2,6 +2,16 @@ import XCTest
 @testable import Malline
 
 class IncludeTests: XCTestCase {
+
+    static var allTests: [(String, (IncludeTests) -> () throws -> Void)] {
+        return [
+            ("testErrorsWhenNoStencilProvided", testErrorsWhenNoStencilProvided),
+            ("testParsesValidInclude", testParsesValidInclude),
+            ("testErrorsWhenNoLoader", testErrorsWhenNoLoader),
+            ("testErrorsWhenStencilNotFound", testErrorsWhenStencilNotFound),
+            ("testRendersStencil", testRendersStencil),
+        ]
+    }
     
     var path: Path!
     var loader: FileSystemLoader!
