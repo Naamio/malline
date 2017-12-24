@@ -1,9 +1,62 @@
 import XCTest
+
 @testable import Malline
 
 class ExpressionTests: XCTestCase {
-    
+
     static let parser = TokenParser(tokens: [], environment: Environment())
+
+    static var allTests: [(String, (ExpressionTests) -> () throws -> Void)] {
+        return [
+            ("testEvaluateToTrueWhenNil", testEvaluateToTrueWhenNil),
+            ("testEvaluateToFalseWhenUnset", testEvaluateToFalseWhenUnset),
+            ("testEvaluateToTrueWhenNotEmpty", testEvaluateToTrueWhenNotEmpty),
+            ("testEvaluateToFalseWhenEmpty", testEvaluateToFalseWhenEmpty),
+            ("testFalseWhenArrayIsEmpty", testFalseWhenArrayIsEmpty),
+            ("testTrueWhenIntegerAboveZero", testTrueWhenIntegerAboveZero),
+            ("testTrueWithString", testTrueWithString),
+            ("testFalseWithEmptyString", testFalseWithEmptyString),
+            ("testFaseWhenIntegerBelowZero", testFaseWhenIntegerBelowZero),
+            ("testTrueWhenFloatAboveZero", testTrueWhenFloatAboveZero),
+            ("testFalseWhenFloatIsBelowZero", testFalseWhenFloatIsBelowZero),
+            ("testTrueWhenDoubleAboveZero", testTrueWhenDoubleAboveZero),
+            ("testFalseWhenDoubleBelowZero", testFalseWhenDoubleBelowZero),
+            ("testFalseWhenUIntZero", testFalseWhenUIntZero),
+            ("testTrueForPositiveExpressions", testTrueForPositiveExpressions),
+            ("testFalseForNegativeExpressions", testFalseForNegativeExpressions),
+            ("testParsingVariableExpression", testParsingVariableExpression),
+            ("testParsingNotExpression", testParsingNotExpression),
+            ("testAndFalseWithLhs", testAndFalseWithLhs),
+            ("testAndFalseWithRhs", testAndFalseWithRhs),
+            ("testAndFalseWithLhsAndRhs", testAndFalseWithLhsAndRhs),
+            ("testAndTrueWithLhsAndRhs", testAndTrueWithLhsAndRhs),
+            ("testEqualityOfStrings", testEqualityOfStrings),
+            ("testFalseEqualityOfStrings", testFalseEqualityOfStrings),
+            ("testEqualityOfNils", testEqualityOfNils),
+            ("testEqualityOfNumbers", testEqualityOfNumbers),
+            ("testFalseEqualityOfNumbers", testFalseEqualityOfNumbers),
+            ("testEqualityOfBooleans", testEqualityOfBooleans),
+            ("testFalseEqualityOfBooleans", testFalseEqualityOfBooleans),
+            ("testEqualityOfFalseBooleans", testEqualityOfFalseBooleans),
+            ("testFalseEqualityOfDifferentTypes", testFalseEqualityOfDifferentTypes),
+            ("testInequalityOfStrings", testInequalityOfStrings),
+            ("testFalseInequalityOfStrings", testFalseInequalityOfStrings),
+            ("testGreaterThanTrue", testGreaterThanTrue),
+            ("testGreaterThanFalse", testGreaterThanFalse),
+            ("testGreaterThanEqualTrue", testGreaterThanEqualTrue),
+            ("testGreaterThanEqualFalse", testGreaterThanEqualFalse),
+            ("testLessThanTrue", testLessThanTrue),
+            ("testLessThanFalse", testLessThanFalse),
+            ("testLessThanEqualTrue", testLessThanEqualTrue),
+            ("testLessThanEqualFalse", testLessThanEqualFalse),
+            ("testMultipleTrueWithOneTrue", testMultipleTrueWithOneTrue),
+            ("testMultipleTrueWithTwoTrue", testMultipleTrueWithTwoTrue),
+            ("testMultipleTrueWithOrTrue", testMultipleTrueWithOrTrue),
+            ("testMultipleFalseWithTwoTrue", testMultipleFalseWithTwoTrue),
+            ("testMultipleFalseWithNothing", testMultipleFalseWithNothing),
+        ]
+    }
+    
     let andExpression = try! parseExpression(components: ["lhs", "and", "rhs"], tokenParser: parser)
     let orExpression = try! parseExpression(components: ["lhs", "or", "rhs"], tokenParser: parser)
     let equalityExpression = try! parseExpression(components: ["lhs", "==", "rhs"], tokenParser: parser)

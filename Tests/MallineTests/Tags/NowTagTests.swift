@@ -1,8 +1,16 @@
 import Foundation
 import XCTest
+
 @testable import Malline
 
 class NowTagTests: XCTestCase {
+
+    static var allTests: [(String, (NowTagTests) -> () throws -> Void)] {
+        return [
+        ]
+    }
+    
+
     #if !os(Linux)
     // MARK: - Parsing
     
