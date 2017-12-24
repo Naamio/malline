@@ -30,7 +30,8 @@ class VariableTests: XCTestCase {
             ("testCanResolveItemFromArrayByIndex", testCanResolveItemFromArrayByIndex),
             ("testCanResolveItemFromArrayByUnknownIndex", testCanResolveItemFromArrayByUnknownIndex),
             ("testCanResolveFirstItemFromArray", testCanResolveFirstItemFromArray),
-            ("testCanResolveLastItemFromArray", testCanResolveLastItemFromArray)
+            ("testCanResolveLastItemFromArray", testCanResolveLastItemFromArray),
+            ("testCanResolvePropertyWithReflection", testCanResolvePropertyWithReflection),
         ]
     }
     
