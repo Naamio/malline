@@ -21,7 +21,7 @@ fileprivate struct Article {
 }
 
 fileprivate class Website {
-    let url: String = "blog.com"
+    let url: String = "naamio.cloud"
 }
 
 fileprivate class Blog: Website {
@@ -97,6 +97,22 @@ class VariableTests: XCTestCase {
         XCTAssertEqual(result, "Tauno")
     }
     
+    func testCanResolveOptionalUsingReflection() throws {
+        let variable = Variable("blog.featuring.author.name")
+        let result = try variable.resolve(context) as? String
+        
+        XCTAssertEqual(result, "Airi")
+    }
+    
+    func testDoesNotResolveOptional() throws {
+        var array: [Any?] = [1, nil]
+        array.append(array)
+        let context = Context(dictionary: ["values": array])
+        
+        XCTAssertEqual(try VariableTag(variable: "values").render(context), "[1, nil, [1, nil]]")
+        XCTAssertEqual(try VariableTag(variable: "values.1").render(context), "")
+    }
+    
     func testCanResolveBooleanLiteral() throws {
         let trueTest = try Variable("true").resolve(context) as? Bool
         let falseTest = try Variable("false").resolve(context) as? Bool
@@ -161,6 +177,20 @@ class VariableTests: XCTestCase {
         let variable = Variable("profiles.count")
         let result = try variable.resolve(context) as? Int
         XCTAssertEqual(result, 1)
+    }
+    
+    func testCanResolveViaReflection() throws {
+        let variable = Variable("blog.articles.0.author.name")
+        let result = try variable.resolve(context) as? String
+        
+        XCTAssertEqual(result, "Tauno")
+    }
+    
+    func testCanResolveSuperclassViaReflection() throws {
+        let variable = Variable("blog.url")
+        let result = try variable.resolve(context) as? String
+        
+        XCTAssertEqual(result, "naamio.cloud")
     }
     
     #if os(OSX)
