@@ -71,9 +71,9 @@ To comment out part of your stencil, you can use the following syntax:
     {# My comment is completely hidden #}
 ```
 
-## Stencil inheritance
+## Malline inheritance
 
-Stencil inheritance allows the common components surrounding individual pages
+Malline inheritance allows the common components surrounding individual pages
 to be shared across other stencils. You can define blocks which can be
 overidden in any child stencil.
 

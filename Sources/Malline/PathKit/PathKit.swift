@@ -598,7 +598,7 @@ extension Path {
 #else
       let matchc = gt.gl_matchc
 #endif
-      return (0..<Int(matchc)).flatMap { index in
+        return (0..<Int(matchc)).compactMap { index in
         if let path = String(validatingUTF8: gt.gl_pathv[index]!) {
           return Path(path)
         }

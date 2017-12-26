@@ -26,7 +26,7 @@ string or a stencil loader.
 ```
 // Render a textual stencil with a given context.
 let stencil = "Hello {{ name }}"
-let context = ["name": "Kyle"]
+let context = ["name": "Tauno"]
 let rendered = environment.renderStencil(string: stencil, context: context)
 ```
 
@@ -34,7 +34,7 @@ Rendering a stencil from the configured loader:
 
 ```
 // Render a file-based stencil with a given context.
-let context = ["name": "Kyle"]
+let context = ["name": "Tauno"]
 let rendered = environment.renderStencil(name: "example.html", context: context)
 ```
 

@@ -14,7 +14,7 @@ class ExtendsTag : TagType {
             throw StencilSyntaxError("'extends' cannot appear more than once in the same stencil")
         }
         
-        let blockTags = parsedTags.flatMap { $0 as? BlockTag }
+        let blockTags = parsedTags.compactMap { $0 as? BlockTag }
         
         let tags = blockTags.reduce([String: BlockTag]()) { (accumulator, tag) -> [String: BlockTag] in
             var dict = accumulator

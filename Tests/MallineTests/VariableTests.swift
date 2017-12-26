@@ -3,8 +3,12 @@ import XCTest
 @testable import Malline
 
 #if os(OSX)
- class Object : NSObject {
-        let title = "Hello World"
+    @objc class Superclass: NSObject {
+        @objc let name = "Foobar"
+    }
+
+    @objc class Object : Superclass {
+        @objc let title = "Hello World"
     }
 #endif
 
@@ -14,6 +18,15 @@ fileprivate struct Person {
 
 fileprivate struct Article {
     let author: Person
+}
+
+fileprivate class Website {
+    let url: String = "blog.com"
+}
+
+fileprivate class Blog: Website {
+    let articles: [Article] = [Article(author: Person(name: "Tauno"))]
+    let featuring: Article? = Article(author: Person(name: "Airi"))
 }
 
 class VariableTests: XCTestCase {
@@ -35,45 +48,70 @@ class VariableTests: XCTestCase {
             "profiles": [
                 "github": "taunol",
             ],
-            "article": Article(author: Person(name: "Tauno"))
+            "counter": [
+                "count": "tauno",
+            ],
+            "article": Article(author: Person(name: "Tauno")),
+            "tuple": (one: 1, two: 2)
             ])
         
         #if os(OSX)
             context["object"] = Object()
         #endif
+        
+        context["blog"] = Blog()
     }
     
-    func testCanResolveStringLiteralWithSingleQuotes() {
+    func testCanResolveStringLiteralWithSingleQuotes() throws {
+        let variable = Variable("\"name\"")
+        let result = try variable.resolve(context) as? String
+        
+        XCTAssertEqual(result, "name")
+    }
+    
+    func testCanResolveStringLiteralWithDoubleQuotes() throws {
         let variable = Variable("'name'")
-        let result = try! variable.resolve(context) as? String
+        let result = try variable.resolve(context) as? String
         
         XCTAssertEqual(result, "name")
     }
         
-    func testCanResolveIntegerLiteral() {
+    func testCanResolveIntegerLiteral() throws {
         let variable = Variable("5")
-        let result = try! variable.resolve(context) as? Number
+        let result = try variable.resolve(context) as? Int
         
         XCTAssertEqual(result, 5)
     }
     
-    func testCanResolveFloatLiteral() {
+    func testCanResolveFloatLiteral() throws {
         let variable = Variable("3.14")
-        let result = try! variable.resolve(context) as? Number
+        let result = try variable.resolve(context) as? Number
         
         XCTAssertEqual(result, 3.14)
     }
     
-    func testCanResolveStringLiteral() {
+    func testCanResolveStringLiteral() throws {
         let variable = Variable("name")
-        let result = try! variable.resolve(context) as? String
+        let result = try variable.resolve(context) as? String
         
         XCTAssertEqual(result, "Tauno")
     }
     
-    func testCanResolveItemFromDictionary() {
+    func testCanResolveBooleanLiteral() throws {
+        let trueTest = try Variable("true").resolve(context) as? Bool
+        let falseTest = try Variable("false").resolve(context) as? Bool
+        let zeroTest = try Variable("0").resolve(context) as? Int
+        let oneTest = try Variable("1").resolve(context) as? Int
+        
+        XCTAssertTrue(trueTest!)
+        XCTAssertFalse(falseTest!)
+        XCTAssertEqual(zeroTest, 0)
+        XCTAssertEqual(oneTest, 1)
+    }
+    
+    func testCanResolveItemFromDictionary() throws {
         let variable = Variable("profiles.github")
-        let result = try! variable.resolve(context) as? String
+        let result = try variable.resolve(context) as? String
         
         XCTAssertEqual(result, "taunol")
     }
@@ -119,12 +157,25 @@ class VariableTests: XCTestCase {
         XCTAssertEqual(result, "Tauno")
     }
     
+    func testCanGetCountofDictionary() throws {
+        let variable = Variable("profiles.count")
+        let result = try variable.resolve(context) as? Int
+        XCTAssertEqual(result, 1)
+    }
+    
     #if os(OSX)
-    func testCanResolveValueByKVO() {
+    func testCanResolveValueByKVO() throws {
         let variable = Variable("object.title")
-        let result = try! variable.resolve(context) as? String
+        let result = try variable.resolve(context) as? String
         
         XCTAssertEqual(result, "Hello World")
+    }
+    
+    func testCanResolveSuperclassValueByKVO() throws {
+        let variable = Variable("object.name")
+        let result = try variable.resolve(context) as? String
+        
+        XCTAssertEqual(result, "Foobar")
     }
     #endif
 }

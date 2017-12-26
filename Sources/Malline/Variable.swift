@@ -66,9 +66,16 @@ public struct Variable : Equatable, Resolvable {
             return value
         }
         
+        // Number literal
+        if let int = Int(variable) {
+            return int
+        }
         if let number = Number(variable) {
-            // Number literal
             return number
+        }
+        // Boolean literal
+        if let bool = Bool(variable) {
+            return bool
         }
         
         for bit in lookup() {
@@ -77,7 +84,11 @@ public struct Variable : Equatable, Resolvable {
             if let context = current as? Context {
                 current = context[bit]
             } else if let dictionary = current as? [String: Any] {
-                current = dictionary[bit]
+                if bit == "count" {
+                    current = dictionary.count
+                } else {
+                    current = dictionary[bit]
+                }
             } else if let array = current as? [Any] {
                 if let index = Int(bit) {
                     if index >= 0 && index < array.count {
