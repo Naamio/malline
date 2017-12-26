@@ -10,17 +10,22 @@ class ForTag : TagType {
     class func parse(_ parser:TokenParser, token:Token) throws -> TagType {
         let components = token.components()
         
-        guard components.count >= 2 && components[2] == "in" &&
-            (components.count == 4 || (components.count >= 6 && components[4] == "where")) else {
-                throw StencilSyntaxError("'for' statements should use the following 'for x in y where condition' `\(token.contents)`.")
+        func hasToken(_ token: String, at index: Int) -> Bool {
+            return components.count > (index + 1) && components[index] == token
+        }
+        
+        func endsOrHasToken(_ token: String, at index: Int) -> Bool {
+            return components.count == index || hasToken(token, at: index)
+        }
+        
+        guard hasToken("in", at: 2) && endsOrHasToken("where", at: 4) else {
+            throw StencilSyntaxError("'for' statements should use the syntax: `for <x> in <y> [where <condition>]")
         }
         
         let loopVariables = components[1]
             .split(separator: ",")
             .map(String.init)
             .map { $0.trimmingCharacters(in: CharacterSet.whitespaces) }
-        
-        let variable = components[3]
         
         var emptyTags = [TagType]()
         
@@ -35,14 +40,14 @@ class ForTag : TagType {
             _ = parser.nextToken()
         }
         
-        let filter = try parser.compileFilter(variable)
-        let `where`: Expression?
-        if components.count >= 6 {
-            `where` = try parseExpression(components: Array(components.suffix(from: 5)), tokenParser: parser)
-        } else {
-            `where` = nil
-        }
-        return ForTag(resolvable: filter, loopVariables: loopVariables, tags: forTags, emptyTags:emptyTags, where: `where`)
+        let resolvable = try parser.compileResolvable(components[3])
+        
+        let `where` = hasToken("where", at: 4)
+            ? try parseExpression(components: Array(components.suffix(from: 5)), tokenParser: parser)
+            : nil
+        
+        return ForTag(resolvable: resolvable, loopVariables: loopVariables, tags: forTags, emptyTags:emptyTags, where: `where`)
+        
     }
     
     init(resolvable: Resolvable, loopVariables: [String], tags:[TagType], emptyTags:[TagType], where: Expression? = nil) {

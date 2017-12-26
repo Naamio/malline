@@ -130,6 +130,12 @@ class ForTagTests: XCTestCase {
         
         XCTAssertEqual(try tag.render(context), "oneItwoII")
     }
+    
+    func testCanIterateRangeofVariables() throws {
+        let template: Stencil = "{% for i in 1...j %}{{ i }}{% endfor %}"
+        
+        XCTAssertEqual(try template.render(Context(dictionary: ["j": 3])), "123")
+    }
 }
 
 fileprivate struct Article {

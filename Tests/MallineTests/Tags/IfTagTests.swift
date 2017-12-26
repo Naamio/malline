@@ -270,4 +270,20 @@ class IfTagTests: XCTestCase {
         let result = try! renderTags(tags, Context(dictionary: ["value": "test"]))
         XCTAssertEqual(result, "true")
     }
+    
+    func testSupportsClosedRangeVariables() throws {
+        let tokens: [Token] = [
+            .block(value: "if value in 1...3"),
+            .text(value: "true"),
+            .block(value: "else"),
+            .text(value: "false"),
+            .block(value: "endif")
+        ]
+        
+        let parser = TokenParser(tokens: tokens, environment: Environment())
+        let tags = try parser.parse()
+        
+        XCTAssertEqual(try renderTags(tags, Context(dictionary: ["value": 3])), "true")
+        XCTAssertEqual(try renderTags(tags, Context(dictionary: ["value": 4])), "false")
+    }
 }

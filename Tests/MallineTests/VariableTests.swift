@@ -193,6 +193,20 @@ class VariableTests: XCTestCase {
         XCTAssertEqual(result, "naamio.cloud")
     }
     
+    func testCanSubscriptTupleByIndex() throws {
+        let variable = Variable("tuple.0")
+        let result = try variable.resolve(context) as? Int
+        
+        XCTAssertEqual(result, 1)
+    }
+    
+    func testCanSubscriptTupleByLabel() throws {
+        let variable = Variable("tuple.two")
+        let result = try variable.resolve(context) as? Int
+        
+        XCTAssertEqual(result, 2)
+    }
+    
     #if os(OSX)
     func testCanResolveValueByKVO() throws {
         let variable = Variable("object.title")
@@ -208,4 +222,57 @@ class VariableTests: XCTestCase {
         XCTAssertEqual(result, "Foobar")
     }
     #endif
+}
+
+class RangeVariableTests: XCTestCase {
+    
+    var context: Context!
+    
+    static var allTests: [(String, (RangeVariableTests) -> () throws -> Void)] {
+        return [
+            ("testCanResolveClosedRangeAsArray", testCanResolveClosedRangeAsArray)
+        ]
+    }
+    
+    override func setUp() {
+        super.setUp()
+        
+        context = {
+            let ext = Extension()
+            ext.registerFilter("incr", filter: { (arg: Any?) in toNumber(value: arg!)! + 1 })
+            let environment = Environment(extensions: [ext])
+            return Context(dictionary: [:], environment: environment)
+        }()
+        
+
+    }
+    
+    func makeVariable(_ token: String) throws -> RangeVariable? {
+        return try RangeVariable(token, parser: TokenParser(tokens: [], environment: context.environment))
+    }
+    
+    func testCanResolveClosedRangeAsArray() throws {
+        let result = try makeVariable("1...3")?.resolve(context) as? [Int]
+        
+        XCTAssertEqual(result, [1, 2, 3])
+    }
+    
+    func testCanResolveDecreasingClosedRangeAsReversedArray() throws {
+        let result = try makeVariable("3...1")?.resolve(context) as? [Int]
+        
+        XCTAssertEqual(result, [3, 2, 1])
+    }
+    
+    func testCanUseFilterOnRangeVariables() throws {
+        let result = try makeVariable("1|incr...3|incr")?.resolve(context) as? [Int]
+        
+        XCTAssertEqual(result, [2, 3, 4])
+    }
+    
+    func testThrowsWhenLeftValueIsNotInt() {
+        let stencil: Stencil = "{% for i in k...j %}{{ i }}{% endfor %}"
+        let exceptionContext = Context(dictionary: ["j": 3, "k": "1"])
+        
+        XCTAssertThrowsError(try stencil.render(exceptionContext))
+    }
 }
