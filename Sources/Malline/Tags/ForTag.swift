@@ -95,6 +95,26 @@ class ForTag : TagType {
             values = dictionary.map { ($0.key, $0.value) }
         } else if let array = resolved as? [Any] {
             values = array
+        } else if let range = resolved as? CountableClosedRange<Int> {
+            values = Array(range)
+        } else if let range = resolved as? CountableRange<Int> {
+            values = Array(range)
+        } else if let resolved = resolved {
+            let mirror = Mirror(reflecting: resolved)
+            switch mirror.displayStyle {
+            case .struct?, .tuple?:
+                values = Array(mirror.children)
+            case .class?:
+                var children = Array(mirror.children)
+                var currentMirror: Mirror? = mirror
+                while let superclassMirror = currentMirror?.superclassMirror {
+                    children.append(contentsOf: superclassMirror.children)
+                    currentMirror = superclassMirror
+                }
+                values = Array(children)
+            default:
+                values = []
+            }
         } else {
             values = []
         }
@@ -110,14 +130,14 @@ class ForTag : TagType {
         if !values.isEmpty {
             let count = values.count
             
-            return try values.enumerated().map { (arg) in
-                
-                let (index, item) = arg
+            return try values.enumerated().map { index, item in
                 let forContext: [String: Any] = [
                     "first": index == 0,
                     "last": index == (count - 1),
                     "counter": index + 1,
-                    ]
+                    "counter0": index,
+                    "length": count
+                ]
                 
                 return try context.push(dictionary: ["forloop": forContext]) {
                     return try push(value: item, context: context) {

@@ -131,6 +131,14 @@ class ForTagTests: XCTestCase {
         XCTAssertEqual(try tag.render(context), "oneItwoII")
     }
     
+    func testRendersCountableClosedRange() throws {
+        let context = Context(dictionary: ["range": 1...3])
+        let tags: [TagType] = [VariableTag(variable: "item")]
+        let tag = ForTag(resolvable: Variable("range"), loopVariables: ["item"], tags: tags, emptyTags: [])
+        
+        XCTAssertEqual(try tag.render(context), "123")
+    }
+    
     func testCanIterateRangeofVariables() throws {
         let template: Stencil = "{% for i in 1...j %}{{ i }}{% endfor %}"
         

@@ -275,4 +275,19 @@ class RangeVariableTests: XCTestCase {
         
         XCTAssertThrowsError(try stencil.render(exceptionContext))
     }
+    
+    func testThrowsWhenRightValueIsNotInt() throws {
+        let variable = try makeVariable("k...j")
+        let exceptionContext = Context(dictionary: ["j": "3", "k": 1])
+        
+        XCTAssertThrowsError(try variable?.resolve(exceptionContext))
+    }
+    
+    func testThrowsWhenLeftValueIsMissing() throws {
+        XCTAssertThrowsError(try makeVariable("...1"))
+    }
+    
+    func testThrowsWhenRightValueIsMissing() throws {
+        XCTAssertThrowsError(try makeVariable("1..."))
+    }
 }
