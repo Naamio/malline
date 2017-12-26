@@ -79,10 +79,10 @@ class FilterTests: XCTestCase {
     }
         
     func testWhitespaceInExpression() {
-        let stencil = Stencil(stencilString: "{{ name | uppercase }}")
-        let result = try! stencil.render(Context(dictionary: ["name": "tauno"]))
+        let stencil = Stencil(stencilString: "{{ value | join : \", \" }}")
+        let result = try! stencil.render(Context(dictionary: ["value": ["One", "Two"]]))
         
-        XCTAssertEqual(result, "TAUNO")
+        XCTAssertEqual(result, "One, Two")
     }
     
     func testSimpleFilterThrowsWithArgument() {
