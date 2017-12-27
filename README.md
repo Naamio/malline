@@ -4,7 +4,7 @@
 [![macOS](https://img.shields.io/badge/os-macOS-green.svg?style=flat)]()
 [![Linux](https://img.shields.io/badge/os-linux-green.svg?style=flat)]()
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=flat)](https://opensource.org/licenses/MIT)
-[![Twitter: @omnijarstudio](https://img.shields.io/badge/contact-@omnijarstudio-blue.svg?style=flat)](https://twitter.com/omnijarstudio)
+[![Twitter: @hellonaamio](https://img.shields.io/badge/contact-@hellonaamio-blue.svg?style=flat)](https://twitter.com/hellonaamio)
 
 **Malline** is a simple and powerful template language for Swift. It provides a
 syntax similar to Handlebars & Mustache. If you're familiar with these, you will
