@@ -24,6 +24,18 @@ The `for` tag can iterate over dictionaries.
     </ul>
 ```
 
+It can also iterate over ranges, tuple elements, structs' and classes' stored properties (using ``Mirror``).
+
+You can iterate over range literals created using ``N...M`` syntax, both in ascending and descending order:
+
+```
+    <ul>
+      {% for i in 1...array.count %}
+        <li>{{ i }}</li>
+      {% endfor %}
+    </ul>
+```
+
 The `for` tag can contain optional `where` expression to filter out
 elements on which this expression evaluates to false.
 
@@ -53,6 +65,7 @@ The for block sets a few variables available within the loop:
 - `first` - True if this is the first time through the loop
 - `last` - True if this is the last time through the loop
 - `counter` - The current iteration of the loop
+- `length` - The total length of the loop
 
 ### `if`
 
@@ -99,7 +112,7 @@ or to negate a variable.
 ```
 
 You may use `and`, `or` and `not` multiple times together. `not` has
-higest prescidence followed by `and`. For example:
+highest precedence followed by `and`. For example:
 
 ```
     {% if one or two and three %}
@@ -212,6 +225,13 @@ You can include another stencil using the `include` tag.
     {% include "comment.html" %}
 ```
 
+By default the included file gets passed the current context. You can pass a sub context by using an optional 2nd 
+parameter as a lookup in the current context.
+
+```
+    {% include "comment.html" comment %}
+```
+
 The `include` tag requires you to provide a loader which will be used to lookup
 the stencil.
 
@@ -239,7 +259,7 @@ Defines a block that can be overridden by child stencils. See
 ### `capitalize`
 
 The capitalize filter allows you to capitalize a string.
-For example, `stencil` to `Stencil`.
+For example, `stencil` to `Stencil`. Can be applied to array of strings to change each string.
 
 ```
     {{ "stencil"|capitalize }}
@@ -248,7 +268,7 @@ For example, `stencil` to `Stencil`.
 ### `uppercase`
 
 The uppercase filter allows you to transform a string to uppercase.
-For example, `Stencil` to `STENCIL`.
+For example, `Stencil` to `STENCIL`. Can be applied to array of strings to change each string.
 
 ```
     {{ "Stencil"|uppercase }}
@@ -257,7 +277,7 @@ For example, `Stencil` to `STENCIL`.
 ### `lowercase`
 
 The uppercase filter allows you to transform a string to lowercase.
-For example, `Stencil` to `stencil`.
+For example, `Stencil` to `stencil`. Can be applied to array of strings to change each string.
 
 ```
     {{ "Stencil"|lowercase }}
@@ -280,4 +300,27 @@ Join an array of items.
     {{ value|join:", " }}
 ```
 
-**The value MUST be an array.**
+**The value MUST be an array.** Default argument value is empty string.
+
+`split`
+
+
+Split string into substrings by separator.
+
+```
+    {{ value|split:", " }}
+```
+**The value MUST be a String.** Default argument value is a single-space string.
+
+`indent`
+
+Indents lines of rendered value or block.
+
+```
+    {{ value|indent:2," ",true }}
+```
+Filter accepts several arguments:
+
+* indentation width: number of indentation characters to indent lines with. Default is `4`.
+* indentation character: character to be used for indentation. Default is a space.
+* indent first line: whether first line of output should be indented or not. Default is `false`.

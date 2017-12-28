@@ -14,7 +14,9 @@ class ForTagTests: XCTestCase {
             ("testRendersProvidingCounter", testRendersProvidingCounter),
             ("testRendersWithWhereFilter", testRendersWithWhereFilter),
             ("testRendersWithWhereFilterOut", testRendersWithWhereFilterOut),
-            ("testRendersFilter", testRendersFilter),
+            ("testRendersFilterWithSpaces", testRendersFilterWithSpaces),
+            ("testRendersStructs", testRendersStructs),
+            ("testRendersClasses", testRendersClasses),
             ("testRendersWithDictionary", testRendersWithDictionary),
             ("testRendersWithDictionaryWithValue", testRendersWithDictionaryWithValue),
         ]
@@ -125,8 +127,8 @@ class ForTagTests: XCTestCase {
     
     // MARK: - Can Render a Filter
     
-    func testRendersFilter() {
-        let stencilString: String = "{% for article in ars|default:articles %}" +
+    func testRendersFilterWithSpaces() {
+        let stencilString: String = "{% for article in ars | default: a, b , articles %}" +
             "- {{ article.title }} by {{ article.author }}.\n" +
         "{% endfor %}\n"
         

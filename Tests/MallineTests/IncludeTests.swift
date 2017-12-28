@@ -2,7 +2,7 @@ import XCTest
 @testable import Malline
 
 class IncludeTests: XCTestCase {
-
+    
     static var allTests: [(String, (IncludeTests) -> () throws -> Void)] {
         return [
             ("testErrorsWhenNoStencilProvided", testErrorsWhenNoStencilProvided),
@@ -10,6 +10,7 @@ class IncludeTests: XCTestCase {
             ("testErrorsWhenNoLoader", testErrorsWhenNoLoader),
             ("testErrorsWhenStencilNotFound", testErrorsWhenStencilNotFound),
             ("testRendersStencil", testRendersStencil),
+            ("testStencilPassesContext", testStencilPassesContext)
         ]
     }
     
@@ -75,6 +76,13 @@ class IncludeTests: XCTestCase {
         let context = Context(dictionary: ["target": "World"], environment: environment)
         let value = try! tag.render(context)
         
+        XCTAssertEqual(value, "Hello World!")
+    }
+    
+    func testStencilPassesContext() throws {
+        let stencil = Stencil(stencilString: "{% include \"test.html\" child %}")
+        let context = Context(dictionary: ["child": ["target": "World"]], environment: environment)
+        let value = try stencil.render(context)
         XCTAssertEqual(value, "Hello World!")
     }
 }
