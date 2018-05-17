@@ -10,17 +10,22 @@ class ForTag : TagType {
     class func parse(_ parser:TokenParser, token:Token) throws -> TagType {
         let components = token.components()
         
-        guard components.count >= 2 && components[2] == "in" &&
-            (components.count == 4 || (components.count >= 6 && components[4] == "where")) else {
-                throw StencilSyntaxError("'for' statements should use the following 'for x in y where condition' `\(token.contents)`.")
+        func hasToken(_ token: String, at index: Int) -> Bool {
+            return components.count > (index + 1) && components[index] == token
+        }
+        
+        func endsOrHasToken(_ token: String, at index: Int) -> Bool {
+            return components.count == index || hasToken(token, at: index)
+        }
+        
+        guard hasToken("in", at: 2) && endsOrHasToken("where", at: 4) else {
+            throw StencilSyntaxError("'for' statements should use the syntax: `for <x> in <y> [where <condition>]")
         }
         
         let loopVariables = components[1]
             .split(separator: ",")
             .map(String.init)
             .map { $0.trimmingCharacters(in: CharacterSet.whitespaces) }
-        
-        let variable = components[3]
         
         var emptyTags = [TagType]()
         
@@ -35,14 +40,14 @@ class ForTag : TagType {
             _ = parser.nextToken()
         }
         
-        let filter = try parser.compileFilter(variable)
-        let `where`: Expression?
-        if components.count >= 6 {
-            `where` = try parseExpression(components: Array(components.suffix(from: 5)), tokenParser: parser)
-        } else {
-            `where` = nil
-        }
-        return ForTag(resolvable: filter, loopVariables: loopVariables, tags: forTags, emptyTags:emptyTags, where: `where`)
+        let resolvable = try parser.compileResolvable(components[3])
+        
+        let `where` = hasToken("where", at: 4)
+            ? try parseExpression(components: Array(components.suffix(from: 5)), tokenParser: parser)
+            : nil
+        
+        return ForTag(resolvable: resolvable, loopVariables: loopVariables, tags: forTags, emptyTags:emptyTags, where: `where`)
+        
     }
     
     init(resolvable: Resolvable, loopVariables: [String], tags:[TagType], emptyTags:[TagType], where: Expression? = nil) {
@@ -53,25 +58,26 @@ class ForTag : TagType {
         self.where = `where`
     }
     
-    func push<Result>(value: Any, context: Context, closure: () throws -> (Result)) rethrows -> Result {
+    func push<Result>(value: Any, context: Context, closure: () throws -> (Result)) throws -> Result {
         if loopVariables.isEmpty {
             return try context.push() {
                 return try closure()
             }
         }
         
-        if let value = value as? (Any, Any) {
-            let first = loopVariables[0]
-            
-            if loopVariables.count == 2 {
-                let second = loopVariables[1]
-                
-                return try context.push(dictionary: [first: value.0, second: value.1]) {
-                    return try closure()
-                }
+        let valueMirror = Mirror(reflecting: value)
+        if case .tuple? = valueMirror.displayStyle {
+            if loopVariables.count > Int(valueMirror.children.count) {
+                throw StencilSyntaxError("Tuple '\(value)' has less values than loop variables")
             }
+            var variablesContext = [String: Any]()
+            valueMirror.children.prefix(loopVariables.count).enumerated().forEach({ (offset, element) in
+                if loopVariables[offset] != "_" {
+                    variablesContext[loopVariables[offset]] = element.value
+                }
+            })
             
-            return try context.push(dictionary: [first: value.0]) {
+            return try context.push(dictionary: variablesContext) {
                 return try closure()
             }
         }
@@ -90,6 +96,26 @@ class ForTag : TagType {
             values = dictionary.map { ($0.key, $0.value) }
         } else if let array = resolved as? [Any] {
             values = array
+        } else if let range = resolved as? CountableClosedRange<Int> {
+            values = Array(range)
+        } else if let range = resolved as? CountableRange<Int> {
+            values = Array(range)
+        } else if let resolved = resolved {
+            let mirror = Mirror(reflecting: resolved)
+            switch mirror.displayStyle {
+            case .struct?, .tuple?:
+                values = Array(mirror.children)
+            case .class?:
+                var children = Array(mirror.children)
+                var currentMirror: Mirror? = mirror
+                while let superclassMirror = currentMirror?.superclassMirror {
+                    children.append(contentsOf: superclassMirror.children)
+                    currentMirror = superclassMirror
+                }
+                values = Array(children)
+            default:
+                values = []
+            }
         } else {
             values = []
         }
@@ -105,14 +131,14 @@ class ForTag : TagType {
         if !values.isEmpty {
             let count = values.count
             
-            return try values.enumerated().map { (arg) in
-                
-                let (index, item) = arg
+            return try values.enumerated().map { index, item in
                 let forContext: [String: Any] = [
                     "first": index == 0,
                     "last": index == (count - 1),
                     "counter": index + 1,
-                    ]
+                    "counter0": index,
+                    "length": count
+                ]
                 
                 return try context.push(dictionary: ["forloop": forContext]) {
                     return try push(value: item, context: context) {

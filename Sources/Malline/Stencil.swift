@@ -21,29 +21,6 @@ open class Stencil: ExpressibleByStringLiteral {
         tokens = lexer.tokenize()
     }
     
-    /// Create a stencil with the given name inside the given bundle
-    @available(*, deprecated, message: "Use Environment/FileSystemLoader instead")
-    public convenience init(named:String, inBundle bundle:Bundle? = nil) throws {
-        let useBundle = bundle ??  Bundle.main
-        guard let url = useBundle.url(forResource: named, withExtension: nil) else {
-            throw NSError(domain: NSCocoaErrorDomain, code: NSFileNoSuchFileError, userInfo: nil)
-        }
-        
-        try self.init(URL:url)
-    }
-    
-    /// Create a stencil with a file found at the given URL
-    @available(*, deprecated, message: "Use Environment/FileSystemLoader instead")
-    public convenience init(URL:Foundation.URL) throws {
-        try self.init(path: Path(URL.path))
-    }
-    
-    /// Create a stencil with a file found at the given path
-    @available(*, deprecated, message: "Use Environment/FileSystemLoader instead")
-    public convenience init(path: Path, environment: Environment? = nil, name: String? = nil) throws {
-        self.init(stencilString: try path.read(), environment: environment, name: name)
-    }
-    
     // MARK: ExpressibleByStringLiteral
     
     // Create a stencil with a stencil string literal

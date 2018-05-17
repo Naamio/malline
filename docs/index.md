@@ -37,16 +37,16 @@ feel right at home with Malline.
 
 ## The User Guide
 
-### For Stencil Writers
+### For Malline Writers
 
-Resources for Stencil stencil authors to write Stencil stencils.
+Resources for Malline stencil authors to write Malline stencils.
 
  - [Stencils](./templates.md)
  - [Build-ins](./builtins.md)
 
 ### For Developers
 
-Resources to help you integrate Stencil into a Swift project.
+Resources to help you integrate Malline into a Swift project.
 
 - [Installation](./installation.md)
 - [Getting Started](./getting-started.md)

@@ -5,7 +5,7 @@ call render on it providing a context.
 
 ```
     let stencil = Stencil(stencilString: "Hello {{ name }}")
-    try stencil.render(["name": "kyle"])
+    try stencil.render(["name": "tauno"])
 ```
 
 For more advanced uses, you would normally create an `Environment` and call
@@ -14,7 +14,7 @@ the `renderStencil` convinience method.
 ```
     let environment = Environment()
 
-    let context = ["name": "kyle"]
+    let context = ["name": "tauno"]
     try stencil.renderStencil(string: "Hello {{ name }}", context: context)
 ```
 
@@ -30,6 +30,6 @@ For example, to render a stencil called `index.html` inside the
     let fsLoader = FileSystemLoader(paths: ["stencils/"])
     let environment = Environment(loader: fsLoader)
 
-    let context = ["name": "kyle"]
+    let context = ["name": "tauno"]
     try stencil.renderStencil(name: "index.html", context: context)
 ```

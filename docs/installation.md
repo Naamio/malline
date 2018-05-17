@@ -11,7 +11,7 @@ dependencies inside `Package.swift`.
     let package = Package(
       name: "MyApplication",
       dependencies: [
-        .Package(url: "https://github.com/OmnijarStudio/malline.git", majorVersion: 0, minor: 2),
+        .Package(url: "https://github.com/Naamio/malline.git", majorVersion: 0, minor: 2),
       ]
     )
 ```
